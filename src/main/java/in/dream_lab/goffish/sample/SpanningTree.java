@@ -25,9 +25,10 @@ public class SpanningTree extends
             IVertex<LongWritable, LongWritable, LongWritable, LongWritable> initVertex = getSubgraph().getLocalVertices().iterator().next();
             visited.put(initVertex.getVertexId(), true);
             queue.add(initVertex);
+            System.out.println(" : ");
             BFS(queue.get(0));
 
-            if(getSubgraph().getSubgraphId().compareTo(new LongWritable(0))==0){
+            if(getSubgraph().getSubgraphId().get()==1){
                 subgraphVisited = true;
                 sendMessage();
             }
@@ -43,23 +44,26 @@ public class SpanningTree extends
 
 
     public void BFS(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> source){
-        for(IEdge<LongWritable, LongWritable, LongWritable> edge : source.getOutEdges()){
+        for(IEdge<LongWritable, LongWritable, LongWritable> edge : source.getOutEdges()) {
             IVertex<LongWritable, LongWritable, LongWritable, LongWritable> neighbour = getSubgraph().getVertexById(edge.getSinkVertexId());
-            if(!neighbour.isRemote()){
-                if(!visited.get(neighbour.getVertexId())){
+            if (!neighbour.isRemote()) {
+                if (!visited.get(neighbour.getVertexId())) {
+                    System.out.println(" : ");
                     System.out.println(source.getVertexId() + " - " + neighbour.getVertexId());
                     visited.put(neighbour.getVertexId(), true);
                     queue.add(neighbour);
                 }
-            }
-            else{
+            } else {
                 messagePair.put(((IRemoteVertex<LongWritable, LongWritable, LongWritable, LongWritable, LongWritable>)
-                        neighbour).getSubgraphId(),
+                                neighbour).getSubgraphId(),
                         new PairLongWritable(source.getVertexId(), neighbour.getVertexId()));
             }
-            queue.remove(source);
-            if(queue.size()>0)
-                BFS(queue.get(0));
+        }
+        queue.remove(source);
+        if(queue.size()>0){
+//            System.out.println(queue.get(0).getVertexId().get() + " BFS on this");
+            BFS(queue.get(0));
+
         }
     }
 

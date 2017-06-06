@@ -25,6 +25,9 @@ public class KCore extends
                 core.put(vertex.getVertexId(), edges.size());
             }
             Collections.sort(verticesSorted, new CompareVertex());
+            /*for (Map.Entry<LongWritable, Integer> entry : core.entrySet()) {
+                System.out.println(entry.getKey() + " degree: " + entry.getValue());
+            }*/
 
             for(int i=0; i<verticesSorted.size(); i++){
                 vertexDegree vertex = verticesSorted.get(0);
