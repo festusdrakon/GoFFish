@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SpanningTree.iml" filepath="$PROJECT_DIR$/SpanningTree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpanningForest.iml" filepath="$PROJECT_DIR$/SpanningForest.iml" />
     </modules>
   </component>
 </project>

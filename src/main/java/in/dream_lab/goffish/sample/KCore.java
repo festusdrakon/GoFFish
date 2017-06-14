@@ -1,3 +1,4 @@
+/*
 package in.dream_lab.goffish.sample;
 
 import in.dream_lab.goffish.api.*;
@@ -6,9 +7,11 @@ import org.apache.hadoop.io.LongWritable;
 import java.io.IOException;
 import java.util.*;
 
+*/
 /**
  * Created by Hullas on 22-05-2017.
- */
+ *//*
+
 public class KCore extends
         AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, PairLongWritable, LongWritable, LongWritable, LongWritable> implements ISubgraphWrapup{
 
@@ -25,9 +28,11 @@ public class KCore extends
                 core.put(vertex.getVertexId(), edges.size());
             }
             Collections.sort(verticesSorted, new CompareVertex());
-            /*for (Map.Entry<LongWritable, Integer> entry : core.entrySet()) {
+            */
+/*for (Map.Entry<LongWritable, Integer> entry : core.entrySet()) {
                 System.out.println(entry.getKey() + " degree: " + entry.getValue());
-            }*/
+            }*//*
+
 
             for(int i=0; i<verticesSorted.size(); i++){
                 vertexDegree vertex = verticesSorted.get(0);
@@ -92,18 +97,22 @@ public class KCore extends
 //      Map<Integer, List<LongWritable>> coreNumber = new HashMap<>();
 
         for (Map.Entry<LongWritable, Integer> entry : core.entrySet()) {
-           /*if (coreNumber.get(entry.getValue()) == null)
+           */
+/*if (coreNumber.get(entry.getValue()) == null)
                 coreNumber.put(entry.getValue(), new LinkedList<LongWritable>());
-            coreNumber.get(entry.getValue()).add(entry.getKey());*/
+            coreNumber.get(entry.getValue()).add(entry.getKey());*//*
+
             System.out.println(entry.getKey() + " core: " + entry.getValue());
         }
 
-        /*List<Integer> keys = new ArrayList<>(coreNumber.keySet());
+        */
+/*List<Integer> keys = new ArrayList<>(coreNumber.keySet());
         Collections.sort(keys, Collections.reverseOrder());
 
         for (Integer element : keys) {
             System.out.println(element + " := " + coreNumber.get(element));
-        }*/
+        }*//*
+
     }
 
     static class vertexDegree{
@@ -144,4 +153,4 @@ public class KCore extends
         }
         return -1;
     }
-}
+}*/
