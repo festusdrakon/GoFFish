@@ -2,7 +2,10 @@ package in.dream_lab.goffish.sample;
 
 import in.dream_lab.goffish.api.*;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Writable;
 
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.util.*;
 
@@ -10,17 +13,17 @@ import java.util.*;
  * Created by Hullas on 08-06-2017.
  */
 public class SpanningForest extends
-        AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, PairLongWritable, LongWritable, LongWritable, LongWritable>
+        AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, MultipleLongWritable, LongWritable, LongWritable, LongWritable>
         implements ISubgraphWrapup{
 
     long cid;
-    PairLongWritable edge=null;
-    Map<LongWritable, PairLongWritable> messagePair = new HashMap<>();
+    MultipleLongWritable edge=null;
+    Map<LongWritable, MultipleLongWritable> messagePair = new HashMap<>();
     Map<LongWritable, Boolean> visited = new HashMap<>();
     List<IVertex<LongWritable, LongWritable, LongWritable, LongWritable>> queue = new ArrayList<>();
 
     @Override
-    public void compute(Iterable<IMessage<LongWritable, PairLongWritable>> messages) throws IOException {
+    public void compute(Iterable<IMessage<LongWritable, MultipleLongWritable>> messages) throws IOException {
         if(getSuperstep()==0){
             cid=getSubgraph().getSubgraphId().get();
             for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
@@ -35,7 +38,7 @@ public class SpanningForest extends
         }
         else{
             boolean changed = false;
-            for(IMessage<LongWritable, PairLongWritable> message : messages){
+            for(IMessage<LongWritable, MultipleLongWritable> message : messages){
                 if(message.getMessage().getId3()<cid){
                     cid=message.getMessage().getId3();
                     edge = message.getMessage();
@@ -62,7 +65,7 @@ public class SpanningForest extends
             else {
                     messagePair.put(((IRemoteVertex<LongWritable, LongWritable, LongWritable, LongWritable, LongWritable>)
                                     neighbour).getSubgraphId(),
-                            new PairLongWritable(source.getVertexId().get(), neighbour.getVertexId().get()));
+                            new MultipleLongWritable(source.getVertexId().get(), neighbour.getVertexId().get()));
             }
         }
         queue.remove(source);
@@ -74,8 +77,8 @@ public class SpanningForest extends
     public void sendMessage(){
         Iterator it = messagePair.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<LongWritable, PairLongWritable> pair = (Map.Entry) it.next();
-            sendMessage(pair.getKey(), new PairLongWritable(pair.getValue().getId1(), pair.getValue().getId2(), cid));
+            Map.Entry<LongWritable, MultipleLongWritable> pair = (Map.Entry) it.next();
+            sendMessage(pair.getKey(), new MultipleLongWritable(pair.getValue().getId1(), pair.getValue().getId2(), cid));
         }
     }
 
@@ -83,6 +86,61 @@ public class SpanningForest extends
     public void wrapup() throws IOException {
         if(cid!=getSubgraph().getSubgraphId().get())
             System.out.println(edge.getId1() + " - " + edge.getId2());
+    }
+
+}
+
+/**
+ * Created by Hullas on 18-05-2017.
+ */
+class MultipleLongWritable implements Writable {
+
+    public long id1;
+    public long id2;
+    public long id3;
+
+    public MultipleLongWritable() {
+    }
+
+    public MultipleLongWritable(long id1) {
+        this.id1 = id1;
+    }
+
+    public MultipleLongWritable(long id1, long id2) {
+        this.id1 = id1;
+        this.id2 = id2;
+    }
+
+    public MultipleLongWritable(long id1, long id2, long id3) {
+        this.id1 = id1;
+        this.id2 = id2;
+        this.id3 = id3;
+    }
+
+    public long getId1() {
+        return id1;
+    }
+
+    public long getId2() {
+        return id2;
+    }
+
+    public long getId3() {
+        return id3;
+    }
+
+    @Override
+    public void write(DataOutput dataOutput) throws IOException {
+        dataOutput.writeLong(id1);
+        dataOutput.writeLong(id2);
+        dataOutput.writeLong(id3);
+    }
+
+    @Override
+    public void readFields(DataInput dataInput) throws IOException {
+        id1 = dataInput.readLong();
+        id2 = dataInput.readLong();
+        id3 = dataInput.readLong();
     }
 }
 
