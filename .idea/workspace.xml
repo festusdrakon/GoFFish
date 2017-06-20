@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f120edc4-0187-450e-a864-4f88e9ff5687" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/PairLongWritable.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/PairLongWritable.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SpanningForest-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/SpanningForest-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/MultipleLongWritable.class" afterPath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/MultipleLongWritable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/SpanningForest.class" afterPath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/SpanningForest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpanningForest.properties" afterPath="$PROJECT_DIR$/SpanningForest.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java" afterPath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" />
     </list>
@@ -24,43 +22,34 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="SpanningForest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="814">
-              <caret line="22" column="42" lean-forward="false" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KCore.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1850">
-              <caret line="50" column="9" lean-forward="false" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+            <state relative-caret-position="3589">
+              <caret line="104" column="63" lean-forward="false" selection-start-line="104" selection-start-column="63" selection-end-line="104" selection-end-column="63" />
               <folding>
-                <marker date="1497695075752" expanded="false" signature="5845:5860" ph=" { " />
-                <marker date="1497695075752" expanded="false" signature="5876:5886" ph=" }" />
-                <marker date="1497695075752" expanded="false" signature="5911:5926" ph=" { " />
-                <marker date="1497695075752" expanded="false" signature="5940:5950" ph=" }" />
-                <marker date="1497695075752" expanded="false" signature="6127:6142" ph=" { " />
-                <marker date="1497695075752" expanded="false" signature="6163:6173" ph=" }" />
-                <marker date="1497695075752" expanded="false" signature="6317:6332" ph=" { " />
-                <marker date="1497695075752" expanded="false" signature="6361:6371" ph=" }" />
+                <element signature="imports" expanded="true" />
+                <element signature="class#MultipleLongWritable#0" expanded="false" />
+                <element signature="e#4859#4860#0" expanded="true" />
+                <element signature="e#4889#4890#0" expanded="true" />
+                <element signature="e#5169#5170#0" expanded="true" />
+                <element signature="e#5195#5196#0" expanded="true" />
+                <element signature="e#5223#5224#0" expanded="true" />
+                <element signature="e#5249#5250#0" expanded="true" />
+                <element signature="e#5277#5278#0" expanded="true" />
+                <element signature="e#5303#5304#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpanningForest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java">
+      <file leaf-file-name="KCore.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3515">
-              <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state relative-caret-position="518">
+              <caret line="81" column="26" lean-forward="false" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="class#MultipleLongWritable#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -93,10 +82,17 @@
       <find>system.out.println</find>
       <find>`</find>
       <find>0,0</find>
+      <find>LongLongIntWritable</find>
+      <find>IRemoteV</find>
+      <find>poll</find>
+      <find>map.ent</find>
+      <find>core</find>
+      <find>LongIntWritable</find>
     </findStrings>
     <replaceStrings>
       <replace>long</replace>
       <replace>PairLongWritable</replace>
+      <replace>MultipleLongWritable</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -128,8 +124,9 @@
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreAb.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/PairLongWritable.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreNew.java" />
-        <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreTilak.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" />
       </list>
     </option>
   </component>
@@ -154,8 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -233,6 +228,8 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -546,20 +543,32 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="GoFFish" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="GoFFish" />
+        <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      </PATH_ELEMENT>
+    </PATH>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningTree.java" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="888">
           <caret line="24" column="31" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -570,18 +579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="888">
           <caret line="24" column="31" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/PairLongWritable.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/cc_noSubgraphPair.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningTree.java" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="24" column="31" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -592,7 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -602,7 +598,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -612,7 +607,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -622,7 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -632,7 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -641,7 +633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -650,7 +641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -659,7 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1110">
           <caret line="30" column="21" lean-forward="false" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -702,56 +691,47 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningTree.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreNew1.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreAb.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="78" column="13" lean-forward="false" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="13" />
-          <folding>
-            <marker date="1497695075752" expanded="false" signature="5845:5860" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="5876:5886" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="5911:5926" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="5940:5950" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="6127:6142" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="6163:6173" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="6317:6332" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="6361:6371" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreOld.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/PairLongWritable.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1850">
-          <caret line="50" column="9" lean-forward="false" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
-          <folding>
-            <marker date="1497695075752" expanded="false" signature="5845:5860" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="5876:5886" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="5911:5926" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="5940:5950" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="6127:6142" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="6163:6173" ph=" }" />
-            <marker date="1497695075752" expanded="false" signature="6317:6332" ph=" { " />
-            <marker date="1497695075752" expanded="false" signature="6361:6371" ph=" }" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreOld.java" />
+    <entry file="file://$PROJECT_DIR$/SpanningForest_ORKT.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
+        <state relative-caret-position="575">
           <caret line="22" column="42" lean-forward="false" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreOld.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3515">
-          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state relative-caret-position="3589">
+          <caret line="104" column="63" lean-forward="false" selection-start-line="104" selection-start-column="63" selection-end-line="104" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#MultipleLongWritable#0" expanded="false" />
+            <element signature="e#4859#4860#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5169#5170#0" expanded="true" />
+            <element signature="e#5195#5196#0" expanded="true" />
+            <element signature="e#5223#5224#0" expanded="true" />
+            <element signature="e#5249#5250#0" expanded="true" />
+            <element signature="e#5277#5278#0" expanded="true" />
+            <element signature="e#5303#5304#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="81" column="26" lean-forward="false" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -821,6 +801,17 @@
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
           <last-edited>Maven: asm:asm:3.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>

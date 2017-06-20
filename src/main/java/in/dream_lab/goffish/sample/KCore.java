@@ -1,146 +1,136 @@
-/*
 package in.dream_lab.goffish.sample;
 
 import in.dream_lab.goffish.api.*;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Writable;
 
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.util.*;
 
-
-//  Created by Hullas on 15-06-2017.
-
-
+/**
+ * Created by Hullas on 20-06-2017.
+ */
 public class KCore extends
-        AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, SpanningForest.PairLongWritable, LongWritable, LongWritable, LongWritable> implements ISubgraphWrapup{
+        AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, LongIntWritable, LongWritable, LongWritable, LongWritable>
+        implements ISubgraphWrapup{
 
-    private Map<LongWritable, Integer> core = new HashMap<>();
-    private List<vertexDegree> verticesSorted = new LinkedList<>();
+    Map<Long, Integer> core = new HashMap<>();
+    Map<Long, Set<Long>> neighbours = new HashMap<>();
+    Queue<Long> changed = new ArrayDeque<>();
 
     @Override
-    public void compute(Iterable<IMessage<LongWritable, SpanningForest.PairLongWritable>> iMessages) throws IOException {
+    public void compute(Iterable<IMessage<LongWritable, LongIntWritable>> iMessages) throws IOException {
         if(getSuperstep()==0){
             for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
-                Collection<IEdge<LongWritable, LongWritable, LongWritable>> edges = (Collection<IEdge<LongWritable, LongWritable, LongWritable>>) vertex.getOutEdges();
-                verticesSorted.add(new vertexDegree(vertex.getVertexId(),
-                        edges.size()));
-                core.put(vertex.getVertexId(), edges.size());
-            }
-            Collections.sort(verticesSorted, new CompareVertex());
-            if(verticesSorted.size()>0)
-                sendMessage(new LongWritable(1), new SpanningForest.PairLongWritable(getSubgraph().getSubgraphId().get(), verticesSorted.get(0).getDegree()));
-        }
-
-        else if(getSuperstep()%3==1 && getSubgraph().getSubgraphId().get()==1){
-            long min = iMessages.iterator().next().getMessage().getId2();
-
-            for(IMessage<LongWritable, SpanningForest.PairLongWritable> message : iMessages){
-                if(message.getMessage().getId2()<min)
-                    min = message.getMessage().getId2();
-            }
-
-            for(IMessage<LongWritable, SpanningForest.PairLongWritable> message : iMessages){
-                if(message.getMessage().getId2()==min){
-                    sendMessage(new LongWritable(message.getMessage().getId1()), new SpanningForest.PairLongWritable(0));
-                }
-            }
-            if(verticesSorted.size()==0)
-                sendMessage(new LongWritable(1), new SpanningForest.PairLongWritable(-1));
-            else if(min!=verticesSorted.get(0).getDegree())
-                sendMessage(new LongWritable(1), new SpanningForest.PairLongWritable(-1));
-        }
-        else if(getSuperstep()%3==2){
-            if(getSubgraph().getSubgraphId().get()==1){
-                sendToAll(new SpanningForest.PairLongWritable(-1));
-            }
-            else if(iMessages.iterator().next().getMessage().getId1()==0) {
-                int min = verticesSorted.get(0).getDegree();
-                while (verticesSorted.size() > 0) {
-                    if (verticesSorted.get(0).getDegree() == min) {
-                        vertexDegree vertex = verticesSorted.get(0);
-                        for (IEdge<LongWritable, LongWritable, LongWritable> edge : getSubgraph().getVertexById(vertex.getVertexId()).getOutEdges()) {
-                            IVertex<LongWritable, LongWritable, LongWritable, LongWritable> neighbour = getSubgraph().getVertexById(edge.getSinkVertexId());
-                            if (!neighbour.isRemote()) {
-                                if (core.get(neighbour.getVertexId()) > vertex.getDegree()) {
-                                    if (find(vertex.getVertexId()) != -1) {
-                                        core.put(neighbour.getVertexId(), core.get(neighbour.getVertexId()) - 1);
-                                        verticesSorted.get(find(neighbour.getVertexId())).setDegree(core.get(neighbour.getVertexId()));
-                                    }
-                                }
-                            } else {
-                                sendMessage(((IRemoteVertex<LongWritable, LongWritable, LongWritable, LongWritable, LongWritable>) neighbour).getSubgraphId(),
-                                        new SpanningForest.PairLongWritable(neighbour.getVertexId().get(), vertex.getDegree()));
-                            }
-                        }
-                        verticesSorted.remove(0);
-                        Collections.sort(verticesSorted, new CompareVertex());
-                    } else
-                        break;
-                }
-            }
-        }
-        else if(getSuperstep()%3==0){
-            for(IMessage<LongWritable, SpanningForest.PairLongWritable> message : iMessages){
-                if(message.getMessage().getId1()==-1)
-                    continue;
-                IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex = getSubgraph().getVertexById(new LongWritable(message.getMessage().getId1()));
-                if ( core.get(vertex.getVertexId()) > message.getMessage().getId2()) {
-                    if(find(vertex.getVertexId())!=-1){
-                        verticesSorted.get(find(vertex.getVertexId())).setDegree(core.get(vertex.getVertexId()) - 1);
-                        core.put(vertex.getVertexId(), core.get(vertex.getVertexId()) - 1);
+                core.put(vertex.getVertexId().get(), ((Collection<IEdge<LongWritable, LongWritable, LongWritable>>) vertex.getOutEdges()).size());
+                for(IEdge<LongWritable, LongWritable, LongWritable> edge : vertex.getOutEdges()){
+                    if(getSubgraph().getVertexById(edge.getSinkVertexId()).isRemote()){
+                        if(neighbours.get(vertex.getVertexId().get())==null)
+                            neighbours.put(vertex.getVertexId().get(), new HashSet<Long>());
+                        neighbours.get(vertex.getVertexId().get()).add(((IRemoteVertex<LongWritable, LongWritable, LongWritable, LongWritable, LongWritable>)
+                                getSubgraph().getVertexById(edge.getSinkVertexId())).getSubgraphId().get() );
                     }
                 }
             }
-            Collections.sort(verticesSorted, new CompareVertex());
-            if(verticesSorted.size()>0)
-                sendMessage(new LongWritable(1), new SpanningForest.PairLongWritable(getSubgraph().getSubgraphId().get(), verticesSorted.get(0).getDegree()));
+            changed.addAll(neighbours.keySet());
+            sendMessages();
         }
+
+        else{
+            for(IMessage<LongWritable, LongIntWritable> message : iMessages){
+                core.put(message.getMessage().getId1(), message.getMessage().getId2());
+            }
+            localEstimate();
+            sendMessages();
+        }
+
         voteToHalt();
+    }
+
+    private boolean computeCore(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> v){
+        int k = core.get(v.getVertexId().get());
+        int count[] = new int[k];
+        for(int i=0;i<k;i++)
+            count[i]=0;
+        for(IEdge<LongWritable, LongWritable, LongWritable> edge : v.getOutEdges()){
+            int j = Math.min(k,core.get(edge.getSinkVertexId().get()));
+            for(int i=0;i<j;i++)
+                count[i]+=1;
+        }
+        for(int i=k-1;i>=0;i--){
+            if(count[i]>=i+1){
+                if(i==k-1)
+                    return false;
+                core.put(v.getVertexId().get(), i+1);
+                if(neighbours.get(v.getVertexId().get())!=null)
+                    changed.add(v.getVertexId().get());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void localEstimate(){
+        boolean repeat = true;
+        while(repeat){
+            repeat = false;
+            for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
+                if(computeCore(vertex)){
+                    repeat=true;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void sendMessages(){
+        while(!changed.isEmpty()){
+            Long changedVertex = changed.poll();
+            for(Long nbrSG : neighbours.get(changedVertex)){
+                sendMessage(new LongWritable(nbrSG), new LongIntWritable(changedVertex, core.get(changedVertex)));
+            }
+        }
     }
 
     @Override
     public void wrapup() throws IOException {
-        for (Map.Entry<LongWritable, Integer> entry : core.entrySet())
-            System.out.println(entry.getKey() + " core: " + entry.getValue());
-    }
-
-    static class vertexDegree{
-        LongWritable vertexId;
-        int degree;
-
-        LongWritable getVertexId() {
-            return vertexId;
+        for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
+            System.out.println("VertexId: " + vertex.getVertexId().get() + " core: " + core.get(vertex.getVertexId().get()));
         }
-
-        int getDegree() {
-            return degree;
-        }
-
-        vertexDegree(LongWritable vertexId, int degree) {
-            this.vertexId = vertexId;
-            this.degree = degree;
-        }
-
-        void setDegree(int degree) {
-            this.degree = degree;
-        }
-    }
-
-    public static class CompareVertex implements Comparator<vertexDegree> {
-        public int compare(vertexDegree o1, vertexDegree o2) {
-            return o1.degree - o2.degree;
-        }
-    }
-
-    public int find(LongWritable id){
-        int index = 0;
-        for(vertexDegree temp : verticesSorted){
-            if(temp.getVertexId().equals(id)){
-                return index;
-            }
-            index++;
-        }
-        return -1;
     }
 }
-*/
+
+class LongIntWritable implements Writable {
+
+    public long id1;
+    public int id2;
+
+    public LongIntWritable(){}
+
+    public LongIntWritable(long id1, int id2) {
+        this.id1 = id1;
+        this.id2 = id2;
+    }
+
+    public long getId1() {
+        return id1;
+    }
+
+    public int getId2() {
+        return id2;
+    }
+
+    @Override
+    public void write(DataOutput dataOutput) throws IOException {
+        dataOutput.writeLong(id1);
+        dataOutput.writeInt(id2);
+    }
+
+    @Override
+    public void readFields(DataInput dataInput) throws IOException {
+        id1 = dataInput.readLong();
+        id2 = dataInput.readInt();
+    }
+}

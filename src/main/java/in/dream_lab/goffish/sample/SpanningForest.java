@@ -10,8 +10,34 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by Hullas on 08-06-2017.
+ * Returns an edge list of a Spanning Forest of the given graph.
+ * In the first superstep, it does a local BFS on every subgraph
+ * to find a spanning tree within every subgraph. In the consecutive
+ * supersteps, it forms a spanning forest on the meta-graph.
+ *
+ *
+ *
+ *
+ * @author Hullas Jindal
+ * @author Yogesh Simmhan
+ * @version 1.0
+ * @see <a href="http://www.dream-lab.in/">DREAM:Lab</a>
+ *
+ *      Copyright 2014 DREAM:Lab, Indian Institute of Science, Bangalore
+ *
+ *      Licensed under the Apache License, Version 2.0 (the "License"); you may
+ *      not use this file except in compliance with the License. You may obtain
+ *      a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *      Unless required by applicable law or agreed to in writing, software
+ *      distributed under the License is distributed on an "AS IS" BASIS,
+ *      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *      See the License for the specific language governing permissions and
+ *      limitations under the License.
  */
+
 public class SpanningForest extends
         AbstractSubgraphComputation<LongWritable, LongWritable, LongWritable, MultipleLongWritable, LongWritable, LongWritable, LongWritable>
         implements ISubgraphWrapup{
@@ -20,7 +46,7 @@ public class SpanningForest extends
     MultipleLongWritable edge=null;
     Map<LongWritable, MultipleLongWritable> messagePair = new HashMap<>();
     Map<LongWritable, Boolean> visited = new HashMap<>();
-    List<IVertex<LongWritable, LongWritable, LongWritable, LongWritable>> queue = new ArrayList<>();
+    Queue<IVertex<LongWritable, LongWritable, LongWritable, LongWritable>> queue = new ArrayDeque<>();
 
     @Override
     public void compute(Iterable<IMessage<LongWritable, MultipleLongWritable>> messages) throws IOException {
@@ -32,7 +58,7 @@ public class SpanningForest extends
             IVertex<LongWritable, LongWritable, LongWritable, LongWritable> initVertex = getSubgraph().getLocalVertices().iterator().next();
             visited.put(initVertex.getVertexId(), true);
             queue.add(initVertex);
-            BFS(queue.get(0));
+            BFS();
 
             sendMessage();
         }
@@ -52,25 +78,23 @@ public class SpanningForest extends
         voteToHalt();
     }
 
-    public void BFS(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> source){
-        for(IEdge<LongWritable, LongWritable, LongWritable> edge : source.getOutEdges()) {
-            IVertex<LongWritable, LongWritable, LongWritable, LongWritable> neighbour = getSubgraph().getVertexById(edge.getSinkVertexId());
-            if (!neighbour.isRemote()) {
-                if (!visited.get(neighbour.getVertexId())) {
-                    System.out.println(source.getVertexId() + " - " + neighbour.getVertexId());
-                    visited.put(neighbour.getVertexId(), true);
-                    queue.add(neighbour);
-                }
-            }
-            else {
+    public void BFS(){
+        while(!queue.isEmpty()) {
+            IVertex<LongWritable, LongWritable, LongWritable, LongWritable> source = queue.poll();
+            for (IEdge<LongWritable, LongWritable, LongWritable> edge : source.getOutEdges()) {
+                IVertex<LongWritable, LongWritable, LongWritable, LongWritable> neighbour = getSubgraph().getVertexById(edge.getSinkVertexId());
+                if (!neighbour.isRemote()) {
+                    if (!visited.get(neighbour.getVertexId())) {
+                        System.out.println(source.getVertexId() + " - " + neighbour.getVertexId());
+                        visited.put(neighbour.getVertexId(), true);
+                        queue.add(neighbour);
+                    }
+                } else {
                     messagePair.put(((IRemoteVertex<LongWritable, LongWritable, LongWritable, LongWritable, LongWritable>)
                                     neighbour).getSubgraphId(),
                             new MultipleLongWritable(source.getVertexId().get(), neighbour.getVertexId().get()));
+                }
             }
-        }
-        queue.remove(source);
-        if(queue.size()>0){
-            BFS(queue.get(0));
         }
     }
 
@@ -90,9 +114,6 @@ public class SpanningForest extends
 
 }
 
-/**
- * Created by Hullas on 18-05-2017.
- */
 class MultipleLongWritable implements Writable {
 
     public long id1;
