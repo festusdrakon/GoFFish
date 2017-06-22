@@ -18,7 +18,7 @@ public class KCore extends
 
     Map<Long, Integer> core = new HashMap<>();
     Map<Long, Set<Long>> neighbours = new HashMap<>();
-    Queue<Long> changed = new ArrayDeque<>();
+    Set<Long> changed = new HashSet<>();
 
     @Override
     public void compute(Iterable<IMessage<LongWritable, LongIntWritable>> iMessages) throws IOException {
@@ -86,12 +86,12 @@ public class KCore extends
     }
 
     private void sendMessages(){
-        while(!changed.isEmpty()){
-            Long changedVertex = changed.poll();
+        for(Long changedVertex : changed){
             for(Long nbrSG : neighbours.get(changedVertex)){
                 sendMessage(new LongWritable(nbrSG), new LongIntWritable(changedVertex, core.get(changedVertex)));
             }
         }
+        changed.clear();
     }
 
     @Override
