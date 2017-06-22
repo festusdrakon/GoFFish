@@ -23,6 +23,7 @@ public class KCore extends
     @Override
     public void compute(Iterable<IMessage<LongWritable, LongIntWritable>> iMessages) throws IOException {
         if(getSuperstep()==0){
+            System.out.println("algo started for " + getSubgraph().getSubgraphId());
             for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
                 core.put(vertex.getVertexId().get(), ((Collection<IEdge<LongWritable, LongWritable, LongWritable>>) vertex.getOutEdges()).size());
                 for(IEdge<LongWritable, LongWritable, LongWritable> edge : vertex.getOutEdges()){
@@ -34,6 +35,7 @@ public class KCore extends
                     }
                 }
             }
+            System.out.println("basic checks done, superstep no " + getSuperstep() + " in subgraph " + getSubgraph().getSubgraphId() );
             changed.addAll(neighbours.keySet());
             sendMessages();
         }
@@ -42,8 +44,10 @@ public class KCore extends
             for(IMessage<LongWritable, LongIntWritable> message : iMessages){
                 core.put(message.getMessage().getId1(), message.getMessage().getId2());
             }
+            System.out.println("Compute started from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
             localEstimate();
             sendMessages();
+            System.out.println("Compute ended from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
         }
 
         voteToHalt();
@@ -86,11 +90,13 @@ public class KCore extends
     }
 
     private void sendMessages(){
+        System.out.println("Starting to send messages from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
         for(Long changedVertex : changed){
             for(Long nbrSG : neighbours.get(changedVertex)){
                 sendMessage(new LongWritable(nbrSG), new LongIntWritable(changedVertex, core.get(changedVertex)));
             }
         }
+        System.out.println("Messages sent from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
         changed.clear();
     }
 

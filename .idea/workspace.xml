@@ -4,6 +4,7 @@
     <list default="true" id="f120edc4-0187-450e-a864-4f88e9ff5687" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SpanningForest-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/SpanningForest-1.0-SNAPSHOT.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/KCore.class" afterPath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/KCore.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/LongIntWritable.class" afterPath="$PROJECT_DIR$/target/classes/in/dream_lab/goffish/sample/LongIntWritable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" afterPath="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" />
@@ -23,7 +24,7 @@
       <file leaf-file-name="Bidirected.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/Bidirected.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2183">
+            <state relative-caret-position="1887">
               <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -35,8 +36,8 @@
       <file leaf-file-name="KCore.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="53" column="33" lean-forward="true" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+            <state relative-caret-position="555">
+              <caret line="33" column="70" lean-forward="false" selection-start-line="33" selection-start-column="70" selection-end-line="33" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,8 +117,8 @@
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreNew.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCoreTilak.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/SpanningForest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" />
         <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/Bidirected.java" />
+        <option value="$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java" />
       </list>
     </option>
   </component>
@@ -701,16 +702,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3397">
           <caret line="104" column="63" lean-forward="false" selection-start-line="104" selection-start-column="63" selection-end-line="104" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#MultipleLongWritable#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/Bidirected.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2183">
+        <state relative-caret-position="1887">
           <caret line="59" column="20" lean-forward="false" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -720,8 +717,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/in/dream_lab/goffish/sample/KCore.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="53" column="33" lean-forward="true" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+        <state relative-caret-position="555">
+          <caret line="33" column="70" lean-forward="false" selection-start-line="33" selection-start-column="70" selection-end-line="33" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
