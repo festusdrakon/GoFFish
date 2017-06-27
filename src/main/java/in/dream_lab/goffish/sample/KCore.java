@@ -23,7 +23,6 @@ public class KCore extends
     @Override
     public void compute(Iterable<IMessage<LongWritable, LongIntWritable>> iMessages) throws IOException {
         if(getSuperstep()==0){
-            System.out.println("algo started for " + getSubgraph().getSubgraphId());
             for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
                 core.put(vertex.getVertexId().get(), ((Collection<IEdge<LongWritable, LongWritable, LongWritable>>) vertex.getOutEdges()).size());
                 for(IEdge<LongWritable, LongWritable, LongWritable> edge : vertex.getOutEdges()){
@@ -35,76 +34,62 @@ public class KCore extends
                     }
                 }
             }
-            System.out.println("basic checks done, superstep no " + getSuperstep() + " in subgraph " + getSubgraph().getSubgraphId() );
+            for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getRemoteVertices())
+                core.put(vertex.getVertexId().get(), Integer.MAX_VALUE);
             changed.addAll(neighbours.keySet());
+            localEstimate();
             sendMessages();
         }
 
         else{
-            for(IMessage<LongWritable, LongIntWritable> message : iMessages){
+            for(IMessage<LongWritable, LongIntWritable> message : iMessages)
                 core.put(message.getMessage().getId1(), message.getMessage().getId2());
-            }
-            System.out.println("Compute started from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
             localEstimate();
             sendMessages();
-            System.out.println("Compute ended from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
         }
 
         voteToHalt();
     }
 
     private boolean computeCore(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> v){
-        int k = core.get(v.getVertexId().get());
-        int count[] = new int[k];
-        for(int i=0;i<k;i++)
+        int k = core.get(v.getVertexId().get()), pos;
+        int count[] = new int[k+1];
+        for(int i=1;i<=k;i++)
             count[i]=0;
-        for(IEdge<LongWritable, LongWritable, LongWritable> edge : v.getOutEdges()){
-            int j = Math.min(k,core.get(edge.getSinkVertexId().get()));
-            for(int i=0;i<j;i++)
-                count[i]+=1;
-        }
-        for(int i=k-1;i>=0;i--){
-            if(count[i]>=i+1){
-                if(i==k-1)
-                    return false;
-                core.put(v.getVertexId().get(), i+1);
-                if(neighbours.get(v.getVertexId().get())!=null)
-                    changed.add(v.getVertexId().get());
-                return true;
-            }
-        }
-        return false;
+        for(IEdge<LongWritable, LongWritable, LongWritable> edge : v.getOutEdges())
+            count[Math.min(k,core.get(edge.getSinkVertexId().get()))]+=1;
+        for(int i=k;i>2;i--)
+            count[i-1]+=count[i];
+        for(pos=k;pos>1&&count[pos]<pos;pos--);
+        if(pos==k)
+            return false;
+        core.put(v.getVertexId().get(), pos);
+        if(neighbours.get(v.getVertexId().get())!=null)
+            changed.add(v.getVertexId().get());
+        return true;
     }
 
     private void localEstimate(){
         boolean repeat = true;
         while(repeat){
             repeat = false;
-            for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
-                if(computeCore(vertex)){
+            for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices())
+                if(computeCore(vertex))
                     repeat=true;
-                    break;
-                }
-            }
         }
     }
 
     private void sendMessages(){
-        System.out.println("Starting to send messages from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
-        for(Long changedVertex : changed){
-            for(Long nbrSG : neighbours.get(changedVertex)){
+        for(Long changedVertex : changed)
+            for(Long nbrSG : neighbours.get(changedVertex))
                 sendMessage(new LongWritable(nbrSG), new LongIntWritable(changedVertex, core.get(changedVertex)));
-            }
-        }
-        System.out.println("Messages sent from " + getSubgraph().getSubgraphId() + " in superstep " + getSuperstep());
         changed.clear();
     }
 
     @Override
     public void wrapup() throws IOException {
-        for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices()){
+        for(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> vertex : getSubgraph().getLocalVertices())
             System.out.println("VertexId: " + vertex.getVertexId().get() + " core: " + core.get(vertex.getVertexId().get()));
-        }
     }
 }
 
