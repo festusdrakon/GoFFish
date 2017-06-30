@@ -54,11 +54,10 @@ public class KCore extends
     private boolean computeCore(IVertex<LongWritable, LongWritable, LongWritable, LongWritable> v){
         int k = core.get(v.getVertexId().get()), pos;
         int count[] = new int[k+1];
-        for(int i=1;i<=k;i++)
-            count[i]=0;
+        for(int i=0;++i<=k;count[i]=0);
         for(IEdge<LongWritable, LongWritable, LongWritable> edge : v.getOutEdges())
-            count[Math.min(k,core.get(edge.getSinkVertexId().get()))]+=1;
-        for(int i=k;i>2;i--)
+            count[Math.min(k,core.get(edge.getSinkVertexId().get()))]++;
+        for(int i=k;i>=2;i--)
             count[i-1]+=count[i];
         for(pos=k;pos>1&&count[pos]<pos;pos--);
         if(pos==k)
